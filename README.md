@@ -12,7 +12,7 @@ git clone https://github.com/allishwell/compress.git ~/compress && cd ~/compress
 </pre>
 that's it.
 <pre>
-**compress --help**
+<b>compress --help</b>
   Usage: compress [-R] [-f] [-d directory-path] [-n name] [-e extention] [-q quality]
     where:
       -d 
