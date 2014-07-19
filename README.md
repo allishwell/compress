@@ -12,7 +12,7 @@ git clone https://github.com/allishwell/compress.git ~/compress && cd ~/compress
 </pre>
 that's it.
 <pre>
-__compress --help__
+**compress --help**
   Usage: compress [-R] [-f] [-d directory-path] [-n name] [-e extention] [-q quality]
     where:
       -d 
@@ -41,11 +41,11 @@ __compress --help__
 
 ### some sample commands ###
 <pre>
- __compress -R__
+ **compress -R**
     will recursively scan all jpg file and compress down to 50%
- __compress -R -f -e png --size +521k__
+ **compress -R -f -e png --size +521k**
     will recursively compress all png files which are greater than 512k size
- __compress -R -f -e png --size -521k__
+ **compress -R -f -e png --size -521k**
     will recursively compress all png files which are less than 512k size
- __compress -R -f -d "/home/pictures/" -n "nature*" -e "png" -q 70__
+ **compress -R -f -d "/home/pictures/" -n "nature*" -e "png" -q 70**
  </pre>
