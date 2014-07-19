@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#imagemagick is required
+if ! hash convert 2>/dev/null; then
+   echo "imagemagick is required.if debian run 'sudo apt-get install imagemagick'"
+   exit 1
+fi 
+
 #
 ## Display help text 
 #
