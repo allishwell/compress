@@ -12,7 +12,7 @@ git clone https://github.com/allishwell/compress.git ~/compress && cd ~/compress
 ```
 that's it.
 ```
-<b>compress --help</b>
+compress --help
   Usage: compress [-R] [-f] [-d directory-path] [-n name] [-e extention] [-q quality]
     where:
       -d 
@@ -49,11 +49,11 @@ that's it.
 
 ### some sample commands ###
 ```
- <b>compress -R</b>
+ compress -R
     will recursively scan all jpg file and compress down to 50%
- <b>compress -R -f -e png --size +521k</b>
+ compress -R -f -e png --size +521k
     will recursively compress all png files which are greater than 512k size
- <b>compress -R -f -e png --size -521k</b>
+ compress -R -f -e png --size -521k
     will recursively compress all png files which are less than 512k size
- <b>compress -R -f -d "/home/pictures/" -n "nature*" -e "png" -q 70</b>
+ compress -R -f -d "/home/pictures/" -n "nature*" -e "png" -q 70
 ```
