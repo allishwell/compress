@@ -35,6 +35,14 @@ cat <<"EOF"
             `k'    for Kilobytes (units of 1024 bytes)
             `M'    for Megabytes (units of 1048576 bytes)
             `G'    for Gigabytes (units of 1073741824 bytes)
+      --resize geometry
+        Format of geometry: [WIDTHxHEIGHT | PERCENTAGE]
+        Resize image based on width/height or percentage
+          WIDTH/HEIGHT - positive integer
+          PERCENTAGE - Eg. 50%
+          
+          1024x - will automatically determine height to keep dimension
+          x576 - will automatically determine width to keep dimension
       --log filename
         option log file name 
 EOF
@@ -74,9 +82,10 @@ recursive=' -maxdepth 1'
 log=""
 forceful=0
 size=""
+resize=""
 declare -i count
 
-TEMP=`getopt -q -o d:e:q:Rf --long log:,size: -- "$@"`
+TEMP=`getopt -q -o d:e:q:Rf --long log:,size:,resize: -- "$@"`
 
 if [ $? -ne 0 ]
 then
@@ -95,6 +104,7 @@ do
     -n) name=$2; shift;;
  --log) log=$2; shift;;
 --size) size="-size $2"; shift;;
+--resize) resize="-resize \"$2\""; shift;;
     -R) recursive="";;
     -f) forceful=1;;
     --) shift; break;;
@@ -108,15 +118,19 @@ IFS=$'\n'
 cmd="find $dir $recursive $size ! -path . -type f -name '$name.$ext'"
 files=($(eval $cmd))
 
+if [ "" != "$log" ]; then
+  echo -e "\n########$(date)#########\n" >> $log
+fi
 for index in ${!files[@]} 
 do
   file=${files[$index]}
+  cmd="convert $resize -quality $quality% \"$file\" \"$file\""
   if [ 1 -eq "$forceful" ]; then
     count=$count+1
-    convert -quality $quality% "$file" "$file"
+    $(eval $cmd)
     progressBar ${#files[@]} $(($index+1))
     if [ "" != "$log" ]; then
-       echo convert -quality $quality% "$file" "$file" >> $log 
+       echo $cmd >> $log 
     fi
   else
     image=$(basename ${file})
@@ -125,13 +139,12 @@ do
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
       count=$count+1
-      convert -quality $quality% "$file" "$file"
+      $(eval $cmd)
       if [ "" != "$log" ]; then
-        echo convert -quality $quality% "$file" "$file" >> $log 
+        echo $cmd >> $log 
       fi
     fi
   fi
 done
 echo "$count file(s) compressed out of ${#files[@]}"
 )
-#for name in $1/*.$2; do convert -quality $3% $name $name;echo Processing $name..; done;
