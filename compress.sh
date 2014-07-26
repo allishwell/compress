@@ -85,7 +85,7 @@ size=""
 resize=""
 declare -i count
 
-TEMP=`getopt -q -o d:e:q:Rf --long log:,size:,resize: -- "$@"`
+TEMP=`getopt -q -o d:e:q:n:Rf --long log:,size:,resize: -- "$@"`
 
 if [ $? -ne 0 ]
 then
